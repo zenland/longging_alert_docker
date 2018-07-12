@@ -214,11 +214,12 @@ docker-compose up
 
 ## docker-compose.yaml文件
 
+该文件指定了本地规则配置文件，报警配置文件，自定义报警模板，es的地址和端口号
+
     version: "3"
     services:
       elastalert:
-        image: dingding_alert:1.0
-        #build: ./
+        build: ./
         container_name: elastalert
         command:
         - "--verbose"
@@ -232,6 +233,7 @@ docker-compose up
           ES_PORT: 9200
 
 ## my_alert.py
+
 该文件改写了body=create_alert_body(matches)方法
 
     #! /usr/bin/env python
