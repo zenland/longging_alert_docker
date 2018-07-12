@@ -31,18 +31,18 @@ config.yaml文件定义：
 
 docker-compose.yaml文件配置：
 
-- command(optional): 
-  - "--verbose"
-  - "--debug" 
-  ...
-- volumes:
-  - "./rules:/rules"
-  - "./connfig.yaml:/config.yaml"
-  - "./my_alert.py:/usr/local/lib/python2.7/site-package/elastalert_modules/my_alert.py"
-- environment:
-  ES的地址和端口号
-  - ES_HOST: ""
-  - ES_PORT: ""
+    - command(optional): 
+      - "--verbose"
+      - "--debug" 
+      ...
+    - volumes:
+      - "./rules:/rules"
+      - "./connfig.yaml:/config.yaml"
+      - "./my_alert.py:/usr/local/lib/python2.7/site-package/elastalert_modules/my_alert.py"
+    - environment:
+      ES的地址和端口号
+      - ES_HOST: ""
+      - ES_PORT: ""
   
 command:
 --debug will print additional information to the screen as well as suppresses alerts and instead prints the alert body. Not compatible with --verbose.
