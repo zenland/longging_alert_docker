@@ -33,7 +33,7 @@ docker-compose.yaml文件配置：
 
 - command(optional): 
   - "--verbose"#输入日志信息
-  - "--debug" #在命令行显示日志消息
+  - "--debug" #在命令行显示运行消息
 - volumes:
   - "./rules:/rules"
   - "./connfig.yaml:/config.yaml"
@@ -227,5 +227,71 @@ alert_time_limit:
         environment:
           ES_HOST: "106.75.229.247"
           ES_PORT: 9200
+## 自定义报警消息模板 my_alert.py
+`#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 
+import json
+import requests
+from elastalert.alerts import Alerter, DateTimeEncoder
+from requests.exceptions import RequestException
+from elastalert.util import EAException
+import pdb
+
+class DingTalkAlerter(Alerter):
+
+    required_options = frozenset(['dingtalk_webhook', 'dingtalk_msgtype'])
+
+    def __init__(self, rule):
+        super(DingTalkAlerter, self).__init__(rule)
+        self.dingtalk_webhook_url = self.rule['dingtalk_webhook']
+        self.dingtalk_msgtype = self.rule.get('dingtalk_msgtype', 'text')
+        self.dingtalk_isAtAll = self.rule.get('dingtalk_isAtAll', False)
+        self.digtalk_title = self.rule.get('dingtalk_title', '')
+
+    def format_body(self, body):
+        return body.encode('utf8')
+    def my_create_alert_body(self,matches):
+        body=''
+        index=0
+        body+='报警测试,这是新的文件:'+'\n'
+        for match in matches:
+           index+=1
+           body+='第'+str(index)+'条消息:\n'
+           body+='CPU_P:'+str(match['cpu_p'])+'\n'
+           body+='USER_P:'+str(match['user_p'])+'\n'
+        return body
+
+    def alert(self, matches):
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json;charset=utf-8"
+        }
+#        pdb.set_trace()
+        #body = self.my_create_alert_body(matches)
+        body="这是用于创建的第二个规则"
+        payload = {
+            "msgtype": self.dingtalk_msgtype,
+            "text": {
+                "content": body
+            },
+            "at": {
+                "isAtAll":False
+            }
+        }
+        try:
+            response = requests.post(self.dingtalk_webhook_url,
+                        data=json.dumps(payload, cls=DateTimeEncoder),
+                        headers=headers)
+            response.raise_for_status()
+        except RequestException as e:
+            raise EAException("Error request to Dingtalk: {0}".format(str(e)))
+
+    def get_info(self):
+        return {
+            "type": "dingtalk",
+            "dingtalk_webhook": self.dingtalk_webhook_url
+        }
+        pass
+`
 
