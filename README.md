@@ -38,6 +38,7 @@ docker-compose.yaml文件配置：
   - "./rules:/rules"
   - "./connfig.yaml:/config.yaml"
   - "./my_alert.py:/usr/local/lib/python2.7/site-package/elastalert_modules/my_alert.py"
+  
   第一项：必填
   为规则挂载路径
   注意：其在docker内挂载路径需与config.yaml中配置的相同
