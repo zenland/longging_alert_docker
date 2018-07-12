@@ -31,7 +31,7 @@ config.yaml文件定义：
 
 docker-compose.yaml文件配置：
 
-- command: 
+- command(optional): 
   - "--verbose"
   - "--debug"
 - volumes:
@@ -115,25 +115,36 @@ docker-compose up
 
 该文件指明将报警规则配置文件在/rules目录下
 
-    rules_folder: /rules
-    scan_subdirectiories: false
-    
-    run_every:
-      seconds: 10
-    
-    buffer_time:
-      minutes: 15
-      
-    use_ssl: false
-    
-    writeback_index: elastalert_status
-    
-    alert_time_limit:
-      days: 1
+` rules_folder: /rules
+scan_subdirectiories: false
+
+# How often ElastAlert will query Elasticsearch
+# The unit can be anything from weeks to seconds
+run_every:
+  seconds: 10
+
+# ElastAlert will buffer results from the most recent
+# period of time, in case some log sources are not in real time
+buffer_time:
+  minutes: 15
+
+# Connect with TLS to Elasticsearch
+use_ssl: false
+
+# The index on es_host which is used for metadata storage
+# This can be a unmapped index, but it is recommended that you run
+# elastalert-create-index to set a mapping
+writeback_index: elastalert_status
+
+# If an alert fails for some reason, ElastAlert will retry
+# sending the alert until this time period has elapsed
+alert_time_limit:
+  days: 1
+`
 
 ## rules/example_test.yaml文件
 
-该文件制定报警规则，以及报警方式（钉钉)
+该文件指定，name(规则名字为zxl_test_rule)报警规则(事件cpu0_p_user: 0在50分钟内出现1次)，以及报警方式（钉钉，钉钉url，消息类型)
 
     #Alert when the rate of events exceeds a threshold
     
@@ -209,7 +220,6 @@ docker-compose up
         container_name: elastalert
         command:
         - "--verbose"
-        #- "--debug"
         volumes:
         - "./rules:/rules"
         - "./config.yaml:/config.yaml"
