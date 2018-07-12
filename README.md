@@ -107,7 +107,7 @@ docker-compose up
 
 # 例子
 
-以cpu的日志信息为例
+以cpu的日志信息为例，elasticsearch监听地址：106.75.229.247：9200
 
 ## config.yaml文件
 
