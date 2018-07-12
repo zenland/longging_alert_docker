@@ -32,8 +32,8 @@ config.yaml文件定义：
 docker-compose.yaml文件配置：
 
 - command(optional): 
-  - "--verbose"
-  - "--debug"
+  - "--verbose"#输入日志信息
+  - "--debug" #在命令行显示日志消息
 - volumes:
   - "./rules:/rules"
   - "./connfig.yaml:/config.yaml"
