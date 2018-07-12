@@ -14,7 +14,7 @@ elastalert_modules为钉钉报警所需文件
 
 ## docker启动配置文件
 
-config.yaml
+### config.yaml
 
 config.yaml文件定义：
 
@@ -23,11 +23,11 @@ config.yaml文件定义：
 - buffer_time:
 - writeback_index: 将报警信息写到elasticsearch中的索引
 
-rules
+### rules
 
 此与elastalert的规则配置文件相同
 
-docker-compose.yaml
+### docker-compose.yaml
 
 docker-compose.yaml文件配置：
 
