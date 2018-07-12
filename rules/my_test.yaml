@@ -48,8 +48,6 @@ filter:
 # (Required)
 # The alert is use when a match is found
 alert:
-#- "email"
-#- "debug"
 - "elastalert_modules.my_alert.DingTalkAlerter"
 
 dingtalk_webhook: 'https://oapi.dingtalk.com/robot/send?access_token=cda32502388da442f4bfed3bd4b80346c786c272362b0dcdb74a9208ca745c45'
