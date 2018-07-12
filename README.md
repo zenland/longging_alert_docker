@@ -1,4 +1,4 @@
-#文件说明
+#文件说明\n
 ##镜像所需文件：
 ###Dockerfile
 ###elastalert_modules
