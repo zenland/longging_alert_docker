@@ -43,6 +43,8 @@ docker-compose.yaml文件配置：
       ES的地址和端口号
       - ES_HOST: ""
       - ES_PORT: ""
+      
+ -----------------------------------------
   
     command:
 
