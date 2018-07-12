@@ -1,0 +1,18 @@
+
+
+rules_folder: /rules
+scan_subdirectiories: false
+
+run_every:
+  seconds: 10
+
+buffer_time:
+  minutes: 15
+
+
+use_ssl: false
+
+writeback_index: elastalert_status
+
+alert_time_limit:
+  days: 1

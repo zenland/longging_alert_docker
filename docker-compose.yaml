@@ -1,0 +1,18 @@
+version: "3"
+services:
+  elastalert:
+    #image: dingding_alert:1.0
+    build: ./
+    container_name: elastalert
+    command:
+    - "--verbose"
+    #- "--debug"
+    volumes:
+    #- "./test.txt:/test.txt"
+    - "./rules:/rules"
+    - "./config.yaml:/config.yaml"
+    - "./my_alert.py:/usr/local/lib/python2.7/site-packages/elastalert_modules/my_alert.py"
+    #- "./elastalert_modules:/usr/local/lib/python2.7/site-packages/elastalert_modules"
+    environment:
+      ES_HOST: "106.75.229.247"
+      ES_PORT: 9200
