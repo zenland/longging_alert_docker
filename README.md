@@ -1,8 +1,8 @@
-文件说明
+# 文件说明
 
 
 
-镜像所需文件：
+## 镜像所需文件：
 
 Dockerfile 
 
@@ -12,7 +12,7 @@ elastalert_modules为钉钉报警所需文件
 
 
 
-docker启动配置文件
+## docker启动配置文件
 
 config.yaml
 
@@ -52,7 +52,7 @@ docker-compose.yaml文件配置：
   - ES_PORT: ""
     
 
-自定义报警配置文件
+## 自定义报警配置文件
 
 my_alert.py
 
@@ -60,15 +60,15 @@ my_alert.py
 
 
 
-运行说明
+# 运行说明
 
-获取镜像
+## 获取镜像
 
 git clone https://github.com/zenland/longging_alert_docker.git
 
 以下涉及的文件均在logging_alert_docker文件夹下
 
-配置文件
+## 配置文件
 
 config.yaml
 
@@ -98,17 +98,17 @@ docker-compose.yaml文件
 
 
 
-运行
+## 运行
 
 docker-compose up
 
 
 
-例子
+# 例子
 
 以cpu的日志信息为例
 
-config.yaml文件
+## config.yaml文件
 
 该文件指明将报警规则配置文件在/rules目录下
 
@@ -128,7 +128,7 @@ config.yaml文件
     alert_time_limit:
       days: 1
 
-rules/example_test.yaml文件
+## rules/example_test.yaml文件
 
 该文件制定报警规则，以及报警方式（钉钉)
 
@@ -196,7 +196,7 @@ rules/example_test.yaml文件
     # a list of email addresses to send alerts to
     
 
-docker-compose.yaml文件
+## docker-compose.yaml文件
 
     version: "3"
     services:
