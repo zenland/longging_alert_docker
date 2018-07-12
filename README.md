@@ -234,7 +234,9 @@ alert_time_limit:
           ES_HOST: "106.75.229.247"
           ES_PORT: 9200
 ## 自定义报警消息模板 my_alert.py
-`#! /usr/bin/env python
+`
+
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import json
