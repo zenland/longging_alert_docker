@@ -44,31 +44,32 @@ docker-compose.yaml文件配置：
       - ES_HOST: ""
       - ES_PORT: ""
   
-command:
---debug will print additional information to the screen as well as suppresses alerts and instead prints the alert body. Not compatible with --verbose.
+    command:
 
---verbose will print additional information without suppressing alerts. Not compatible with --debug.
+    --debug will print additional information to the screen as well as suppresses alerts and instead prints the alert body. Not compatible with --verbose.
 
---start will begin querying at the given timestamp. By default, ElastAlert will begin querying from the present. Timestamp format is YYYY-MM-DDTHH-MM-SS[-/+HH:MM] (Note the T between date and hour). Eg: --start 2014-09-26T12:00:00 (UTC) or --start 2014-10-01T07:30:00-05:00
+    --verbose will print additional information without suppressing alerts. Not compatible with --debug.
 
---end will cause ElastAlert to stop querying at the given timestamp. By default, ElastAlert will continue to query indefinitely.
+    --start will begin querying at the given timestamp. By default, ElastAlert will begin querying from the present. Timestamp format is YYYY-MM-DDTHH-MM-SS[-/+HH:MM] (Note the T between date and hour). Eg: --start 2014-09-26T12:00:00 (UTC) or --start 2014-10-01T07:30:00-05:00
 
---rule will allow you to run only one rule. It must still be in the rules folder. Eg: --rule this_rule.yaml
+    --end will cause ElastAlert to stop querying at the given timestamp. By default, ElastAlert will continue to query indefinitely.
 
---config allows you to specify the location of the configuration. By default, it is will look for config.yaml in the current directory.
+    --rule will allow you to run only one rule. It must still be in the rules folder. Eg: --rule this_rule.yaml
 
-volumes
+    --config allows you to specify the location of the configuration. By default, it is will look for config.yaml in the current directory.
 
-  第一项：必填
-  为规则挂载路径
-  注意：其在docker内挂载路径需与config.yaml中配置的相同
+    volumes
+
+      第一项：必填
+      为规则挂载路径
+      注意：其在docker内挂载路径需与config.yaml中配置的相同
   
-  第二项：必填
-  为报警配置文件
+      第二项：必填
+      为报警配置文件
   
-  第三项：选填
-  自定义报警
-  注意：其路径必须在“/usr/local/lib/python2.7/site-package/elastalert_modules/”路径下
+      第三项：选填
+      自定义报警
+      注意：其路径必须在“/usr/local/lib/python2.7/site-package/elastalert_modules/”路径下
 
 ## 自定义报警配置文件
 
