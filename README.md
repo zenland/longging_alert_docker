@@ -115,29 +115,35 @@ docker-compose up
 
 该文件指明将报警规则配置文件在/rules目录下
 
-` rules_folder: /rules
+` 
+rules_folder: /rules
 scan_subdirectiories: false
 
 #How often ElastAlert will query Elasticsearch
 #The unit can be anything from weeks to seconds
+
 run_every:
   seconds: 10
 
 #ElastAlert will buffer results from the most recent
 #period of time, in case some log sources are not in real time
+
 buffer_time:
   minutes: 15
 
 #Connect with TLS to Elasticsearch
+
 use_ssl: false
 
 #The index on es_host which is used for metadata storage
 #This can be a unmapped index, but it is recommended that you run
 #elastalert-create-index to set a mapping
+
 writeback_index: elastalert_status
 
 #If an alert fails for some reason, ElastAlert will retry
 #sending the alert until this time period has elapsed
+
 alert_time_limit:
   days: 1
 `
