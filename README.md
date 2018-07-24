@@ -405,3 +405,25 @@ rules/my_test2.yaml文件
     realert:
     minutes: 0
 
+## 邮箱报警自定义
+由于需要邮箱报警，elastalert实现了email报警，而它已经被封装到了容器内了，解决方法为，类似于钉钉，自己重写邮箱报警方法。
+自定义邮箱报警方法：
+
+    ./my_email_alert.py
+### 配置
+同钉钉一样，需要在docker-compose.yaml中挂载文件，还需要将rules/*.yaml 中用到自定义email的规则的文件的alert项修改下
+docker-compose.yaml文件volumes如下：
+
+    volumes:
+    - "./rules:/rules"
+    - "./config.yaml:/config.yaml"
+    - "./my_alert.py:/usr/local/lib/python2.7/site-packages/elastalert_modules/my_alert.py"
+    - "./my_email_alert.py:/usr/local/lib/python2.7/site-packages/elastalert_modules/my_email_alert.py"
+    - "./smtp_auth_file.yaml:/smtp_auth_file.yaml"
+
+rules/email_test.yaml中alert项如下：
+
+    alert:
+    #- "email"
+    - "elastalert_modules.my_email_alert.EmailAlerter"
+可以看到将原来的email修改为了自己写的类了。
