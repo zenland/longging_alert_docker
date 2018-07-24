@@ -421,7 +421,7 @@ docker-compose.yaml文件volumes如下：
     - "./my_email_alert.py:/usr/local/lib/python2.7/site-packages/elastalert_modules/my_email_alert.py"
     - "./smtp_auth_file.yaml:/smtp_auth_file.yaml"
 
-rules/email_test.yaml中alert项如下：
+rules/my_test_email.yaml中alert项如下：
 
     alert:
     #- "email"
