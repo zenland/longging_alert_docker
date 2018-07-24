@@ -364,3 +364,44 @@ alert部分更改：
     - "./my_alert.py:/usr/local/lib/python2.7/site-packages/elastalert_modules/my_alert.py"
     - "./smtp_auth_file_test.yaml:/smtp_auth_file.yaml"
 其中smtp_auth_file.yaml的挂载路径需要与config.yaml文件中的`smtp_auth_file`项保持一致，如果在test中有局部发送邮箱地址配置，其`smtp_auth_file`项也需要与此处挂载路径一致。
+
+# 分组报警
+解决方案
+复制rule文件，根据能标识小组信息的字段进行过滤，更改钉钉url
+例如rules/my_test1.yaml文件
+
+    filter:
+    - query_string:
+        query: "cpu0_p_cpu: 1 AND cpu0_p_user: 0"
+
+    # (Required)
+    # The alert is use when a match is found
+    alert:
+    - "elastalert_modules.my_alert.DingTalkAlerter"
+    dingtalk_webhook: 'a url'
+    dingtalk_msgtype: text
+
+rules/my_test2.yaml文件
+
+    filter:
+    - query_string:
+        query: "cpu0_p_cpu: 0 AND cpu0_p_user: 0 "
+
+    # (Required)
+    # The alert is use when a match is found
+    alert:
+    - "elastalert_modules.my_alert.DingTalkAlerter"
+
+    dingtalk_webhook: 'another url'
+    dingtalk_msgtype: text
+注意：alert里面注明的报警类不需要更改，因为每个部门判断错误的字段都是相同的，所以完全可以用相同的方法处理。
+
+# 其他补充
+在测试时候发现log信息中出现很多ignore rule的信息，google以后发现是因为rules/*.yaml文件中一个参数的原因：
+> By default, you will only get one alert per rule per minute. This is because the default value for realert is minutes: 1. You can set this to 0 to get every alert.
+
+如果需要对每一个错误都发送警告，需要在rules/*.yaml中配置如下参数：
+
+    realert:
+    minutes: 0
+
