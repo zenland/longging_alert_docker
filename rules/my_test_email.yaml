@@ -1,0 +1,73 @@
+#Alert when the rate of events exceeds a threshold
+
+# (Optional)
+# Elasticsearch host
+#es_host: 106.75.229.247
+
+# (Optional)
+# Elasticsearch port
+#es_port: 9200
+
+# (OptionaL) Connect with SSL to Elasticsearch
+#use_ssl: True
+
+# (Optional) basic-auth username and password for Elasticsearch
+#es_username: someusername
+#es_password: somepassword
+
+# (Required)
+# Rule name, must be unique
+name: email_test_rule
+
+# (Required)
+# Type of alert.
+# the frequency rule type alerts when num_events events occur with timeframe time
+type: frequency
+
+# (Required)
+# Index to search, wildcard supported
+index: logstash-*
+
+# (Required, frequency specific)
+# Alert when this many documents matching the query occur within a timeframe
+num_events: 1
+
+# (Required, frequency specific)
+# num_events must occur within this amount of time to trigger an alert
+timeframe:
+  minutes: 50
+
+# (Required)
+# A list of Elasticsearch filters used for find events
+# These filters are joined with AND and nested in a filtered query
+# For more info: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html
+filter:
+- query_string:
+    query: "cpu0_p_user: 1"
+
+# (Required)
+# The alert is use when a match is found
+alert:
+- "email"
+#- "elastalert_modules.my_alert.DingTalkAlerter"
+
+#dingtalk_webhook: 'https://oapi.dingtalk.com/robot/send?access_token=cda32502388da442f4bfed3bd4b80346c786c272362b0dcdb74a9208ca745c45'
+#dingtalk_msgtype: text
+#
+smtp_host: smtp.163.com
+smtp_port: 25
+smtp_auth_file: /smtp_auth_file.yaml
+#email_replay_to: "...@163.com"
+from_addr: "sender's email address@163.com"
+
+# a list of email addresses to send alerts to
+email:
+- "receiver's email address@qq.com"
+
+#- "debug"
+#- "command"
+#pipe_match_json: true
+#command: ["/home/jane/alertfile/php_alert.php"]
+# (required, email specific)
+# a list of email addresses to send alerts to
+

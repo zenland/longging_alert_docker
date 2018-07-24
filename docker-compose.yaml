@@ -1,16 +1,19 @@
 version: "3"
 services:
   elastalert:
-    image: dingding_alert:1.0
-    #build: ./
+    #image: dingding_alert:1.0
+    build: ./
     container_name: elastalert
     command:
     - "--verbose"
+    #- "--rule /rules/my_test.yaml"
+    #- "--verbose"
     #- "--debug"
     volumes:
     - "./rules:/rules"
     - "./config.yaml:/config.yaml"
     - "./my_alert.py:/usr/local/lib/python2.7/site-packages/elastalert_modules/my_alert.py"
+    - "./smtp_auth_file_test.yaml:/smtp_auth_file.yaml"
     environment:
       ES_HOST: "106.75.229.247"
       ES_PORT: 9200

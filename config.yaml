@@ -25,3 +25,10 @@ writeback_index: elastalert_status
 # sending the alert until this time period has elapsed
 alert_time_limit:
   days: 1
+
+
+smtp_host: smtp.163.com
+smtp_port: 25
+smtp_auth_file: /smtp_auth_file.yaml
+from_addr: 'sender's email address@163.com'
+
