@@ -320,5 +320,47 @@ docker-compose up
             }
             pass
     
+# 补充Email
+添加email报警功能
+## 添加的文件
+smtp_auth_file_test.yaml为发送者邮箱的地址和smtp服务密码
 
+    user: "the from address"
+    password: "password for the smtp"
 
+## 更改的配置
+### config.yaml文件
+设置全局发送邮箱的地址
+在原有基础上面添加如下代码：
+
+    smtp_host: smtp.163.com
+    smtp_port: 25
+    smtp_auth_file: /smtp_auth_file.yaml
+    from_addr: 'senders email address@163.com'
+
+### rules/my_test.yaml文件
+alert部分更改：
+
+    alert:
+    - "email"
+    email:
+    - "receiver's email address@qq.com"
+    
+该文件可以配置局部的发送邮箱地址，添加上如下配置即可、
+
+    smtp_host: smtp.163.com
+    smtp_port: 25
+    smtp_auth_file: /smtp_auth_file.yaml
+    from_addr: 'senders email address@163.com'
+    
+完整修改后的文件在rules/my_test_mail.yaml中
+### docker-compose.yaml文件
+在volumes部分需要添加smtp_auth_file_test.yaml文件的挂载路径
+添加后该文件volumes部分如下所示
+
+     volumes:
+    - "./rules:/rules"
+    - "./config.yaml:/config.yaml"
+    - "./my_alert.py:/usr/local/lib/python2.7/site-packages/elastalert_modules/my_alert.py"
+    - "./smtp_auth_file_test.yaml:/smtp_auth_file.yaml"
+其中smtp_auth_file.yaml的挂载路径需要与config.yaml文件中的`smtp_auth_file`项保持一致，如果在test中有局部发送邮箱地址配置，其`smtp_auth_file`项也需要与此处挂载路径一致。
