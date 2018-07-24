@@ -30,5 +30,5 @@ alert_time_limit:
 smtp_host: smtp.163.com
 smtp_port: 25
 smtp_auth_file: /smtp_auth_file.yaml
-from_addr: 'sender's email address@163.com'
+from_addr: 'senders email address@163.com'
 
