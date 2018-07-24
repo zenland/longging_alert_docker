@@ -31,29 +31,47 @@ config.yaml文件定义：
 
 docker-compose.yaml文件配置：
 
-- command(optional): 
-  - "--verbose"#输入日志信息
-  - "--debug" #在命令行显示运行消息
-- volumes:
-  - "./rules:/rules"
-  - "./connfig.yaml:/config.yaml"
-  - "./my_alert.py:/usr/local/lib/python2.7/site-package/elastalert_modules/my_alert.py"
+    - command(optional): 
+      - "--verbose"
+      - "--debug" 
+      ...
+    - volumes:
+      - "./rules:/rules"
+      - "./connfig.yaml:/config.yaml"
+      - "./my_alert.py:/usr/local/lib/python2.7/site-package/elastalert_modules/my_alert.py"
+    - environment:
+      ES的地址和端口号
+      - ES_HOST: ""
+      - ES_PORT: ""
+      
+ -----------------------------------------
   
-  第一项：必填
-  为规则挂载路径
-  注意：其在docker内挂载路径需与config.yaml中配置的相同
+    command:
+
+    --debug will print additional information to the screen as well as suppresses alerts and instead prints the alert body. Not compatible with --verbose.
+
+    --verbose will print additional information without suppressing alerts. Not compatible with --debug.
+
+    --start will begin querying at the given timestamp. By default, ElastAlert will begin querying from the present. Timestamp format is YYYY-MM-DDTHH-MM-SS[-/+HH:MM] (Note the T between date and hour). Eg: --start 2014-09-26T12:00:00 (UTC) or --start 2014-10-01T07:30:00-05:00
+
+    --end will cause ElastAlert to stop querying at the given timestamp. By default, ElastAlert will continue to query indefinitely.
+
+    --rule will allow you to run only one rule. It must still be in the rules folder. Eg: --rule this_rule.yaml
+
+    --config allows you to specify the location of the configuration. By default, it is will look for config.yaml in the current directory.
+
+    volumes
+
+      第一项：必填
+      为规则挂载路径
+      注意：其在docker内挂载路径需与config.yaml中配置的相同
   
-  第二项：必填
-  为报警配置文件
+      第二项：必填
+      为报警配置文件
   
-  第三项：选填
-  自定义报警
-  注意：其路径必须在“/usr/local/lib/python2.7/site-package/elastalert_modules/”路径下
-- environment:
-  ES的地址和端口号
-  - ES_HOST: ""
-  - ES_PORT: ""
-    
+      第三项：选填
+      自定义报警
+      注意：其路径必须在“/usr/local/lib/python2.7/site-package/elastalert_modules/”路径下
 
 ## 自定义报警配置文件
 
@@ -214,11 +232,12 @@ docker-compose up
 
 ## docker-compose.yaml文件
 
+该文件指定了本地规则配置文件，报警配置文件，自定义报警模板，es的地址和端口号
+
     version: "3"
     services:
       elastalert:
-        image: dingding_alert:1.0
-        #build: ./
+        build: ./
         container_name: elastalert
         command:
         - "--verbose"
@@ -232,6 +251,7 @@ docker-compose up
           ES_PORT: 9200
 
 ## my_alert.py
+
 该文件改写了body=create_alert_body(matches)方法
 
     #! /usr/bin/env python
