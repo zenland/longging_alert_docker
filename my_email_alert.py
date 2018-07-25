@@ -50,8 +50,23 @@ class EmailAlerter(Alerter):
         if add_suffix and not add_suffix.startswith('@'):
             self.rule['email_add_domain'] = '@' + add_suffix
 
+    def my_create_alert_body(self,matches):
+        body=''
+        index=0
+        body+='<table>'
+        body+='<tr><td colspan="2"><b>From staging environment</b></td></tr>'
+        body+='<tr><td colspan="2"><b>===================</b></td></tr>'
+        for match in matches:
+           body+='<tr><td><b>k8s:host: </b></td><td>'+str(match['k8s:host'])+'</tr>'
+           if match.has_key('k8s:app'):
+               body+='<tr><td><b>k8s:app: </b></td><td>'+str(match['k8s:app'])+'</tr>'
+           body+='<tr><td><b>level: </b></td><td>'+str(match['level'])+'</tr>'
+           body+='<tr><td><b>message: </b></td><td>'+str(match['message'])+'</td></tr>'
+	body+='</table>'
+        return body
+
     def alert(self, matches):
-        body = self.create_alert_body(matches)
+        body = self.my_create_alert_body(matches)
 
         # Add JIRA ticket if it exists
         if self.pipeline is not None and 'jira_ticket' in self.pipeline:
@@ -111,13 +126,13 @@ class EmailAlerter(Alerter):
         elastalert_logger.info("Sent email to %s" % (to_addr))
 
     def create_default_title(self, matches):
-        subject = 'ElastAlert: %s' % (self.rule['name'])
+        subject = '%s - alert' % (self.rule['name'])
 
         # If the rule has a query_key, add that value plus timestamp to subject
         if 'query_key' in self.rule:
             qk = matches[0].get(self.rule['query_key'])
             if qk:
-                subject += ' - %s' % (qk)
+                subject += ' - %s' % (qk[0:128])
 
         return subject
 
