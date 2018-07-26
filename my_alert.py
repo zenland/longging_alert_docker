@@ -38,11 +38,11 @@ class DingTalkAlerter(Alerter):
            index+=1
 #           body+='**[第'+str(index)+'条消息]:** \n'
            body+='>- **k8s:host:** '+str(match['k8s:host'])+'\n'
-	   body+='>- **k8s:app:** '+str(match['k8s:app'])+'\n'
+           body+='>- **k8s:app:** '+str(match['k8s:app'])+'\n'
            if match.has_key('k8s:pod_name'):
-	       body+='>- **k8s:pod_name:** '+str(match['k8s:pod_name'])+'\n'
+               body+='>- **k8s:pod_name:** '+str(match['k8s:pod_name'])+'\n'
            elif match.has_key('service_name'):
-	       body+='>- **service_name:** '+str(match['service_name'])+'\n'
+               body+='>- **service_name:** '+str(match['service_name'])+'\n'
            body+='>- **level:** '+str(match['level'])+'\n'
            body+='>- **message:** '+str(match['message'])
         return body
@@ -58,12 +58,12 @@ class DingTalkAlerter(Alerter):
         payload = {
             "msgtype": self.dingtalk_msgtype,
             "markdown": {
-		"title": "test",
-		"text": body
+                "title": "test",
+                "text": body
             },
-	    "at": {
-	        "isAtAll":False
-	    }
+            "at": {
+                "isAtAll":False
+            }
         }
         try:
             response = requests.post(self.dingtalk_webhook_url, 
