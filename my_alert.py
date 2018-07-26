@@ -55,10 +55,11 @@ class DingTalkAlerter(Alerter):
 #        pdb.set_trace()
         body = self.my_create_alert_body(matches)
         #body="这是用于创建的第二个规则"
+        title = self.rule['name'] + '- alert'
         payload = {
             "msgtype": self.dingtalk_msgtype,
             "markdown": {
-                "title": "test",
+                "title": title,
                 "text": body
             },
             "at": {
