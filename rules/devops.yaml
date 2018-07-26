@@ -30,17 +30,19 @@ index: logstash-*
 
 # (Required, frequency specific)
 # Alert when this many documents matching the query occur within a timeframe
-num_events: 1
-
-realert:
-  minutes: 1
-
-query_key: message
+num_events: 2
 
 # (Required, frequency specific)
 # num_events must occur within this amount of time to trigger an alert
 timeframe:
-  minutes: 50
+  minutes: 10
+
+realert:
+  minutes: 10
+
+query_key: message
+
+aggregation_key: level
 
 # (Required)
 # A list of Elasticsearch filters used for find events
