@@ -58,8 +58,11 @@ class EmailAlerter(Alerter):
         body+='<tr><td colspan="2"><b>===================</b></td></tr>'
         for match in matches:
            body+='<tr><td><b>k8s:host: </b></td><td>'+str(match['k8s:host'])+'</tr>'
-           if match.has_key('k8s:app'):
-               body+='<tr><td><b>k8s:app: </b></td><td>'+str(match['k8s:app'])+'</tr>'
+           if match.has_key('k8s:pod_name'):
+               body+='<tr><td><b>k8s:pod_name: </b></td><td>'+str(match['k8s:pod_name'])+'</tr>'
+           elif match.has_key('service_name'):
+               body+='<tr><td><b>service_name: </b></td><td>'+str(match['service_name'])+'</tr>'
+           body+='<tr><td><b>k8s:app: </b></td><td>'+str(match['k8s:app'])+'</tr>'
            body+='<tr><td><b>level: </b></td><td>'+str(match['level'])+'</tr>'
            body+='<tr><td><b>message: </b></td><td>'+str(match['message'])+'</td></tr>'
 	body+='</table>'
